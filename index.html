@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>RAIN-GS</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- <meta property="og:image" content="img/cats.png"> -->
+    <!-- <meta property="og:image:type" content="image/png"> -->
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ku-cvlab.github.io/RAIN-GS/">
+    <meta property="og:title" content="Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting">
+    <meta property="og:description" content="">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/codemirror.min.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/codemirror.min.js"></script>
+    <script src="js/clipboard.min.js"></script>
+    <script src="js/video_comparison.js"></script>
+    <script src="js/app.js"></script>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-QVFM103BVF"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-QVFM103BVF');
+</script>
+
+<body>
+    <div class="container" id="header" style="text-align: center; margin: auto;">
+        <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
+            <h2 class="col-md-12 text-center" id="title">
+                Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting<br>
+                <small>
+                    Arxiv 2024
+                </small>
+            </h2>
+        </div>
+        <div class="row" id="author-row" style="margin:0 auto;">
+            <div class="col-md-12 text-center" style="display: table; margin:0 auto">
+                <a style="text-decoration:none" href="https://crepejung00.github.io/">
+                    Jaewoo&nbsp;Jung*
+                </a>
+                <span style="padding-left: 20px;"></span>
+                <a style="text-decoration:none" href="https://github.com/ONground-Korea">
+                    Jisang&nbsp;Han*
+                </a>
+                <span style="padding-left: 20px;"></span>
+                <a style="text-decoration:none" href="https://hg010303.github.io">
+                    Honggyu&nbsp;An*
+                </a>
+                <br>
+                <a style="text-decoration:none" href="https://github.com/loggerJK">
+                    Jiwon&nbsp;Kang*
+                </a>
+                <span style="padding-left: 20px;"></span>
+                <a style="text-decoration:none" href="https://github.com/seong0905">
+                    Seonghoon&nbsp;Park*
+                </a>
+                <span style="padding-left: 20px;"></span>
+                <a style="text-decoration:none" href="https://cvlab.korea.ac.kr">
+                    Seungryong&nbsp;Kim
+                </a>
+                <table class="author-table" id="author-table">
+                    <tr>
+                        <td>
+                            Korea University
+                        </td>
+                    </tr>
+                </table>
+                <small>
+                    *Equal Contribution
+                </small>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById('author-row').style.maxWidth = document.getElementById("-row").clientWidth + 'px';
+    </script>
+
+    <div class="container" id="main">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="https://arxiv.org/abs/2312.01003">
+                            <img src="./img/paper_image.png" height="60px">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/KU-CVLAB/RAIN-GS" target="_blank">
+                            <image src="img/github.png" height="60px">
+                                <h4><strong>Code</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="text-center">
+                    <img src="./img/teaser.png" width="60%">
+                </div>
+                <br>
+                <div class="text-center">
+                    The <a style="color: #e66257; text-decoration: none;">left</a> shows the results from 3D Gaussian Splatting trained with 
+                    dense-small-variance (DSV) random initialization, and the <a style="color: #a5de7b; text-decoration: none;">left</a> shows the results by ours. <br>
+                    Transition from 3DGS to ours simply requires <strong>sparse-large-variance (SLV) random initialization</strong> and 
+                    <strong>progressive Gaussian low-pass filtering</strong>. <br>
+                    Remarkably, each of our strategies can be implemented with a 
+                    simple change in <strong><i>one line of code</i></strong>. The improvement is achieved <strong><i>without</i></strong> any 
+                    regularization, training, or external models.
+                    <br><br>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Qualitative Results
+                </h3>
+                <!-- <div class="text-center">
+                    <img src="./img/quan_perdataset.png" width="100%">
+                </div>
+                <br>
+                <div class="text-center">
+                    <img src="./img/quan_synthetic_perscene.png" width="80%">
+                </div> -->
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3>
+                        Quantitative Results
+                    </h3>
+                    <!-- <div class="text-center">
+                        <img src="./img/quan_perdataset.png" width="100%">
+                    </div>
+                    <br>
+                    <div class="text-center">
+                        <img src="./img/quan_synthetic_perscene.png" width="80%">
+                    </div> -->
+                </div>
+            </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h3>
+                    Citation
+                </h3>
+                <!-- <div class="form-group col-md-10">
+                    <textarea id="bibtex" class="form-control" readonly>
+@misc{jung2023selfevolving,
+title={Self-Evolving Neural Radiance Fields},
+author={Jaewoo Jung and Jisang Han and Jiwon Kang and Seongchan Kim and Min-Seop Kwak and Seungryong Kim},
+year={2023},
+eprint={2312.01003},
+archivePrefix={arXiv},
+primaryClass={cs.CV}
+}
+                    </textarea>
+                </div> -->
+            </div>
+        </div>
+
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h3>
+                        Acknowledgements
+                    </h3>
+                    <p class="text-justify">
+                        <!-- We would like to thank Lior Yariv and Kai Zhang for helping us evaluate their methods, and Ricardo Martin-Brualla for helpful comments on our text. DV is supported by the National Science Foundation under Cooperative Agreement PHY-2019786 (an NSF AI Institute, <a href="http://iaifi.org">http://iaifi.org</a>) -->
+                        <!-- <br> -->
+                        The website template was borrowed from <a href="http://mgharbi.com/">Michaël Gharbi</a>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+</body>
+
+</html>
