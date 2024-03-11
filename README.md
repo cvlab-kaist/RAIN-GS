@@ -11,12 +11,12 @@ by [Jaewoo Jung](https://crepejung00.github.io)\*, [Jisang Han](https://github.c
 ![](assets/teaser.png)<br>
 We introduce a novel optimization strategy **RAIN-GS** for 3D Gaussian Splatting!
 
-We show that our simple yet effective strategy consisted of sparse-large-variance (SLV) random initialization and progressive Gaussian low-pass filter control robustly guides 3D Gaussians to model the scene even when starting from random point clouds.
+We show that our simple yet effective strategy consisted of **sparse-large-variance (SLV) random initialization** and **progressive Gaussian low-pass filter control** robustly guides 3D Gaussians to model the scene even when starting from random point clouds.
 
 For further details and visualization results, please check out our [paper](https://arxiv.org/abs/) and our [project page](https://ku-cvlab.github.io/RAIN-GS/).
 
 ## Installation
-We implement **RAIN-GS** above the official implementation of 3D Gaussian Splatting. <br> We kindly guide you to follow the original requirements of [3DGS](https://github.com/graphdeco-inria/gaussian-splatting). 
+We implement **RAIN-GS** above the official implementation of 3D Gaussian Splatting. <br> For environmental setup, we kindly guide you to follow the original requirements of [3DGS](https://github.com/graphdeco-inria/gaussian-splatting). 
 
 ## Training
 
