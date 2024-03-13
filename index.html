@@ -43,6 +43,11 @@
     gtag('config', 'G-QVFM103BVF');
 </script>
 
+<!-- Image Comparison Slider -->
+<!-- https://github.com/sneas/img-comparison-slider -->
+<script defer src="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/index.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/img-comparison-slider@8/dist/styles.css" />
+
 <body>
     <div class="container" id="header" style="text-align: center; margin: auto;">
         <div class="row" id="title-row" style="max-width: 100%; margin: 0 auto; display: inline-block">
@@ -117,7 +122,7 @@
         <div class="container">
             <div class="row">
                 <div class="text-center">
-                    <img src="./img/teaser.png" width="60%">
+                    <img src="./img/teaser.png" width="100%">
                 </div>
                 <br>
                 <div class="text-center">
@@ -135,10 +140,18 @@
         </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <h3>
-                    Qualitative Results
-                </h3>
+            <h3>
+                Qualitative Results
+            </h3>
+            <div class="text-center col-md-offset-0">
+                <img-comparison-slider style="width: 45%;">
+                    <img slot="first" src="imgs/3dgs/bicycle/00016.png" width="100%" />
+                    <img slot="second" src="imgs/ours/bicycle/00016.png" width="100%" />
+                </img-comparison-slider>
+                <img-comparison-slider style="width: 45%;">
+                    <img slot="first" src="imgs/3dgs/bicycle/00016_depth_inferno.png" width="100%" />
+                    <img slot="second" src="imgs/ours/bicycle/00016_depth_inferno.png" width="100%" />
+                </img-comparison-slider>
                 <!-- <div class="text-center">
                     <img src="./img/quan_perdataset.png" width="100%">
                 </div>
@@ -150,7 +163,7 @@
         </div>
 
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-offset-0">
                     <h3>
                         Quantitative Results
                     </h3>
@@ -165,7 +178,7 @@
             </div>
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-offset-0">
                 <h3>
                     Citation
                 </h3>
@@ -185,7 +198,7 @@ primaryClass={cs.CV}
         </div>
 
             <div class="row">
-                <div class="col-md-8 col-md-offset-2">
+                <div class="col-md-offset-0">
                     <h3>
                         Acknowledgements
                     </h3>
