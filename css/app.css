@@ -88,25 +88,51 @@ tr,
 p,
 a {
   font-family: 'Roboto', Verdana, Helvetica, sans-serif;
-  font-size: 20px
+  font-size: 12px
 }
 
 strong {
   font-family: 'Roboto', Verdana, Helvetica, sans-serif;
-  font-size: 20px;
+  font-size: 12px;
 }
 
 heading {
   font-family: 'Roboto', Verdana, Helvetica, sans-serif;
-  font-size: 22px;
+  font-size: 12px;
 }
 
 papertitle {
   font-family: 'Roboto', Verdana, Helvetica, sans-serif;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 700
 }
+@media (min-width: 480px) {
+  body,
+  td,
+  th,
+  tr,
+  p,
+  a {
+    font-family: 'Roboto', Verdana, Helvetica, sans-serif;
+    font-size: 20px
+  }
 
+  strong {
+    font-family: 'Roboto', Verdana, Helvetica, sans-serif;
+    font-size: 20px;
+  }
+
+  heading {
+    font-family: 'Roboto', Verdana, Helvetica, sans-serif;
+    font-size: 22px;
+  }
+
+  papertitle {
+    font-family: 'Roboto', Verdana, Helvetica, sans-serif;
+    font-size: 14px;
+    font-weight: 700
+  }
+}
 name {
   font-family: 'Roboto', Verdana, Helvetica, sans-serif;
   font-size: 32px;

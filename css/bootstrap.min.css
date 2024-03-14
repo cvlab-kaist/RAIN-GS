@@ -1267,29 +1267,31 @@ h6 .small,
 .h6 .small {
 	font-size: 75%;
 }
-h1,
-.h1 {
-	font-size: 39px;
-}
-h2,
-.h2 {
-	font-size: 32px;
-}
-h3,
-.h3 {
-	font-size: 26px;
-}
-h4,
-.h4 {
-	font-size: 19px;
-}
-h5,
-.h5 {
-	font-size: 15px;
-}
-h6,
-.h6 {
-	font-size: 13px;
+@media (min-width: 480px){
+    h1,
+    .h1 {
+        font-size: 39px;
+    }
+    h2,
+    .h2 {
+        font-size: 32px;
+    }
+    h3,
+    .h3 {
+        font-size: 26px;
+    }
+    h4,
+    .h4 {
+        font-size: 19px;
+    }
+    h5,
+    .h5 {
+        font-size: 15px;
+    }
+    h6,
+    .h6 {
+        font-size: 13px;
+    }
 }
 p {
 	margin: 0 0 10.5px;
@@ -1667,8 +1669,8 @@ pre code {
 .col-lg-12 {
 	position: relative;
 	min-height: 1px;
-	padding-left: 15px;
-	padding-right: 15px;
+	/* padding-left: 15px;
+	padding-right: 15px; */
 }
 .col-xs-1,
 .col-xs-2,
