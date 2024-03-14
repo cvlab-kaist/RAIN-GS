@@ -2,7 +2,7 @@
 <a href="https://ku-cvlab.github.io/RAIN-GS/ "><img src="https://img.shields.io/badge/Project%20Page-online-brightgreen"></a>
 <br>
 
-This is our official implementation of the "Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting"!
+This is our official implementation of the paper "Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting"!
 
 by [Jaewoo Jung](https://crepejung00.github.io)<sup>:umbrella:</sup>, [Jisang Han](https://github.com/ONground-Korea)<sup>:umbrella:</sup>, [Honggyu An](https://hg010303.github.io/)<sup>:umbrella:</sup>, [Jiwon Kang](https://github.com/loggerJK)<sup>:umbrella:</sup>, [Seonghoon Park](https://github.com/seong0905)<sup>:umbrella:</sup>, [Seungryong Kim](https://cvlab.korea.ac.kr)<sup>&dagger;</sup>
 
