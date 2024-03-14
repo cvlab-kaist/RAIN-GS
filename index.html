@@ -17,7 +17,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ku-cvlab.github.io/RAIN-GS/">
-    <meta property="og:title" content="Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting">
+    <meta property="og:title" content="RAIN-GS: Accurate Initialization Constraint for 3D Gaussian Splatting">
     <meta property="og:description" content="">
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -52,7 +52,7 @@
     <div class="container" id="header" style="text-align: center; margin: auto;">
         <div class="row" id="title-row" style="max-width: 100%; margin: 10 auto; display: inline-block">
             <h1 class="col-md-12 text-center" style="margin-top: 70px;" id="title">
-                Relaxing Accurate Initialization Constraint <br>for 3D Gaussian Splatting<br>
+                RAIN-GS: Relaxing Accurate Initialization Constraint <br>for 3D Gaussian Splatting<br>
                 <!-- <small>
                     Arxiv 2024
                 </small> -->
@@ -83,18 +83,21 @@
                 <a style="text-decoration:none" href="https://cvlab.korea.ac.kr">
                     Seungryong&nbsp;Kim
                 </a>
+                <br>
+                <small>
+                    <img src="img/rain.png" width="15px">&nbsp; Equal Contribution
+                </small>
                 <table class="author-table" id="author-table">
                     <tr>
                         <td>
-                            <img src="img/Korea_University.png" width="20px">&nbsp;&nbsp;
+    <br>
+                            <img src="img/Korea_University.png" width="15px">&nbsp;
                             Korea University
                         </td>
                     </tr>
                     
                 </table>
-                <small>
-                    <img src="img/rain.png" width="15px"> Equal Contribution
-                </small>
+                
             </div>
         </div>
     </div>
@@ -224,8 +227,10 @@
                     We show the quantitative comparisons of different datasets! 
                     3DGS (DSV) indicates the results of 3DGS trained with 
                     dense-small-variance random initialized point clouds, which is the original random initialization strategy used in 3D Gaussian Splatting. <br>
-                    As all other methods can be trained without initial SfM point clouds, 
-                    <a style="color: #808080; text-decoration: none;">3DGS<sup>&dagger;</sup></a> is grayed out.
+                    <a style="color: #808080; text-decoration: none;">&dagger;: As 3DGS<sup>&dagger;</sup> is the only method that utilizes SfM point clouds, the values are only included for reference.</a>  
+                    
+
+
                     <h4 style="margin-top: 20px;">
                         Mip-NeRF360 Dataset
                     </h4>
