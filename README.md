@@ -4,7 +4,7 @@
 
 This is our official implementation of Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting!
 
-by [Jaewoo Jung](https://crepejung00.github.io)\*, [Jisang Han](https://github.com/ONground-Korea)\*, [Honggyu An](https://hg010303.github.io/)\*, [Jiwon Kang](https://github.com/loggerJK)\*, [Seonghoon Park](https://github.com/seong0905)\*, [Seungryong Kim](https://cvlab.korea.ac.kr)&dagger;
+by [Jaewoo Jung](https://crepejung00.github.io)<sup>:umbrella:</sup>, [Jisang Han](https://github.com/ONground-Korea)<sup>:umbrella:</sup>, [Honggyu An](https://hg010303.github.io/)<sup>:umbrella:</sup>, [Jiwon Kang](https://github.com/loggerJK)<sup>:umbrella:</sup>, [Seonghoon Park](https://github.com/seong0905)<sup>:umbrella:</sup>, [Seungryong Kim](https://cvlab.korea.ac.kr)&dagger;
 
 ## Introduction
 ![](assets/teaser.png)<br>
