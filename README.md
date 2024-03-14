@@ -21,10 +21,16 @@ We implement **RAIN-GS** above the official implementation of 3D Gaussian Splatt
 
 To train 3D Gaussian Splatting with our novel strategy (**RAIN-GS**), all you need to do is:
 
+```bash
+python train.py -s {dataset_path} --exp_name {exp_name} --eval --ours
 ```
 
+For dense-small-variance (DSV) initialization, you can simply run the following command:
+```bash
+python train.py -s {dataset_path} --exp_name {exp_name} --eval --DSV
 ```
 
+To train with Mip-NeRF360 dataset, you can add argument `--images images_4` for outdoor scenes and `--images images_2` for indoor scenes to modify the resolution of the input images.
 
 ## Acknowledgement
 
