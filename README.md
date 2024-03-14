@@ -1,5 +1,4 @@
 # RAIN-GS : Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting
-<a href="https://arxiv.org/abs/"><img src="https://img.shields.io/badge/arXiv-2403._________-%23B31B1B"></a>
 <a href="https://ku-cvlab.github.io/RAIN-GS/ "><img src="https://img.shields.io/badge/Project%20Page-online-brightgreen"></a>
 <br>
 
