@@ -25,7 +25,7 @@ To train 3D Gaussian Splatting with our novel strategy (**RAIN-GS**), all you ne
 python train.py -s {dataset_path} --exp_name {exp_name} --eval --ours
 ```
 
-For dense-small-variance (DSV) initialization, you can simply run the following command:
+For dense-small-variance (DSV) random initialization (used in the original 3D Gaussian Splatting), you can simply run with the following command:
 ```bash
 python train.py -s {dataset_path} --exp_name {exp_name} --eval --DSV
 ```
