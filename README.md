@@ -10,7 +10,7 @@ by [Jaewoo Jung](https://crepejung00.github.io)<sup>:umbrella:</sup>, [Jisang Ha
 &dagger;: Corresponding Author
 ## Introduction
 ![](assets/teaser.png)<br>
-We introduce a novel optimization strategy **RAIN-GS** for 3D Gaussian Splatting!
+We introduce a novel optimization strategy (**RAIN-GS**) for 3D Gaussian Splatting!
 
 We show that our simple yet effective strategy consisted of **sparse-large-variance (SLV) random initialization** and **progressive Gaussian low-pass filter control** robustly guides 3D Gaussians to model the scene even when starting from random point clouds.
 
