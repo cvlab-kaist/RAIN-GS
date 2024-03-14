@@ -132,13 +132,15 @@
                 <br>
                 <div>
                     The <a style="color: #e66257; text-decoration: none;">left</a> shows the results from 3D Gaussian Splatting trained with 
-                    dense-small-variance (DSV) random initialization, and the <a style="color: #a5de7b; text-decoration: none;">right</a> shows the results by ours.
+                    dense-small-variance (DSV) random initialization&ast;, and the <a style="color: #a5de7b; text-decoration: none;">right</a> shows the results by ours.
                     Transition from 3DGS to ours simply requires <strong>sparse-large-variance (SLV) random initialization</strong> and 
                     <strong>progressive Gaussian low-pass filtering</strong>.
                     Remarkably, each of our strategies can be implemented with a 
                     simple change in <strong><i>one line of code</i></strong>. The improvement is achieved <strong><i>without</i></strong> any 
                     regularization, training, or external models.
-                    <br><br>
+                    <br>
+                    * : Dense-small-variance (DSV) random initialization indicates the random initialization method used in the original 3DGS.
+                    <br>
 
                 </div>
             </div>
