@@ -130,7 +130,7 @@
                     <img src="./img/teaser.png" width="100%">
                 </div>
                 <br>
-                <div>
+                <div style="text-align:justify">
                     The <a style="color: #e66257; text-decoration: none;">left</a> shows the results from 3D Gaussian Splatting trained with 
                     dense-small-variance (DSV) random initialization&ast;, and the <a style="color: #a5de7b; text-decoration: none;">right</a> shows the results by ours.
                     Transition from 3DGS to ours simply requires <strong>sparse-large-variance (SLV) random initialization</strong> and 
@@ -148,6 +148,28 @@
         <!-- </div> -->
 
         <div class="row">
+            <div class="text-center col-md-offset-0">
+            <h2>
+                Abstract
+            </h2>
+            </div>
+            <div style="text-align:justify;  margin-left:100px; margin-right:100px">
+            3D Gaussian splatting (3DGS) has recently demonstrated
+            impressive capabilities in real-time novel view synthesis and 3D recon-
+            struction. However, 3DGS heavily depends on the accurate initialization
+            derived from Structure-from-Motion (SfM) methods. When trained with
+            randomly initialized point clouds, 3DGS often fails to maintain its ability
+            to produce high-quality images, undergoing large performance drops
+            of 4-5 dB in PSNR in general. Through extensive analysis of SfM initialization 
+            in the frequency domain and analysis of a 1D regression task
+            with multiple 1D Gaussians, we propose a novel optimization strategy
+            dubbed <strong>RAIN-GS</strong> (<strong>R</strong>elaxing <strong>A</strong>ccurate <strong>IN</strong>itialization Constraint for
+            3D Gaussian Splatting) that successfully trains 3D Gaussians from ran-
+            domly initialized point clouds. We show the effectiveness of our strategy
+            through quantitative and qualitative comparisons on standard datasets,
+            largely improving the performance in all settings.
+            </div>
+            <br><br>
             <h2>
                 Qualitative Results
             </h2>
