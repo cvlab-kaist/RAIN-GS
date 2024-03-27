@@ -42,12 +42,10 @@ We would like to acknowledge the contributions of [3D Gaussian Splatting](https:
 ## Citation
 If you find our work helpful, please cite our work as:
 ```
-@misc{jung2024relaxing,
-      title={Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting}, 
-      author={Jaewoo Jung and Jisang Han and Honggyu An and Jiwon Kang and Seonghoon Park and Seungryong Kim},
-      year={2024},
-      eprint={2403.09413},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV}
+@article{jung2024relaxing,
+  title={Relaxing Accurate Initialization Constraint for 3D Gaussian Splatting},
+  author={Jung, Jaewoo and Han, Jisang and An, Honggyu and Kang, Jiwon and Park, Seonghoon and Kim, Seungryong},
+  journal={arXiv preprint arXiv:2403.09413},
+  year={2024}
 }
 ```
