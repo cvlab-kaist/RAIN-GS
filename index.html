@@ -128,19 +128,20 @@
         <!-- <div class="container"> -->
             <div class="row">
                 <div class="text-center">
-                    <img src="./img/teaser.png" width="100%">
+                    <img src="./img/teaser_final.png" width="100%">
                 </div>
                 <br>
                 <div style="text-align:justify">
-                    The <a style="color: #e66257; text-decoration: none;">left</a> shows the results from 3D Gaussian Splatting trained with 
+                    <!-- The <a style="color: #e66257; text-decoration: none;">left</a> shows the results from 3D Gaussian Splatting trained with 
                     dense-small-variance (DSV) random initialization&ast;, and the <a style="color: #a5de7b; text-decoration: none;">right</a> shows the results by ours.
                     Transition from 3DGS to ours simply requires <strong>sparse-large-variance (SLV) random initialization</strong> and 
                     <strong>progressive Gaussian low-pass filtering</strong>.
                     Remarkably, each of our strategies can be implemented with a 
                     simple change in <strong><i>one line of code</i></strong>. The improvement is achieved <strong><i>without</i></strong> any 
-                    regularization, training, or external models.
+                    regularization, training, or external models. -->
+                    <span style="color: red;">Left</span> and <span style="color: green;">right</span> show the results from 3DGS and ours trained with randomly initialized point cloud respectively. Transition from 3DGS to ours simply requires our strategy consisted of sparse-large-variance (SLV) random initialization, progressive Gaussian low-pass filtering, and adaptive bound-expanding split (ABE-Split) algorithm.
                     <br>
-                    * : Dense-small-variance (DSV) random initialization indicates the random initialization method used in the original 3DGS.
+                    <!-- * : Dense-small-variance (DSV) random initialization indicates the random initialization method used in the original 3DGS. -->
                     <br>
                     <br>
 
@@ -155,7 +156,7 @@
             </h2>
             </div>
             <div style="text-align:justify;  margin-left:10%; margin-right:10%">
-            3D Gaussian splatting (3DGS) has recently demonstrated
+            <!-- 3D Gaussian splatting (3DGS) has recently demonstrated
             impressive capabilities in real-time novel view synthesis and 3D reconstruction.
             However, 3DGS heavily depends on the accurate initialization
             derived from Structure-from-Motion (SfM) methods. When trained with
@@ -168,7 +169,19 @@
             3D <strong>G</strong>aussian <strong>S</strong>platting) that successfully trains 3D Gaussians from randomly
             initialized point clouds. We show the effectiveness of our strategy
             through quantitative and qualitative comparisons on standard datasets,
-            largely improving the performance in all settings.
+            largely improving the performance in all settings. -->
+            3D Gaussian splatting (3DGS) has recently demonstrated impressive capabilities in real-time novel view synthesis and 3D reconstruction. 
+            However, 3DGS heavily depends on the accurate initialization derived from Structure-from-Motion (SfM) methods. 
+            When the quality of the initial point cloud deteriorates, such as in the presence of noise or when using randomly initialized point cloud, 
+            3DGS often undergoes large performance drops. To address this limitation, we propose a novel optimization strategy dubbed 
+            <strong>RAIN-GS</strong> (<strong>R</strong>elaxing <strong>A</strong>ccurate <strong>IN</strong>itialization Constraint for 3D 
+            <strong>G</strong>aussian <strong>S</strong>platting). Our approach is based on an in-depth analysis of the original 3DGS optimization scheme and 
+            the analysis of the SfM initialization in the frequency domain. Leveraging simple modifications based on our analyses, 
+            <strong>RAIN-GS</strong> successfully trains 3D Gaussians from sub-optimal point cloud (e.g., randomly initialized point cloud), 
+            effectively relaxing the need for accurate initialization. We demonstrate the efficacy of our strategy through quantitative and qualitative 
+            comparisons on multiple datasets, where <strong>RAIN-GS</strong> trained with random point cloud achieves performance on-par with or even 
+            better than 3DGS trained with accurate SfM point cloud.
+
             </div>
             <br><br>
             <h2>
@@ -244,33 +257,62 @@
 
             </div>
         </div>
+        <div class="row">
+            <h2>
+                Main Qualitative Results
+            </h2>
+            <div class="text-center">
+                <img src="img/mainqual.png" width="100%">
+            </div>
+        </div>
 
             <div class="row">
                 <div class="col-md-offset-0">
                     <h2>
                         Quantitative Results
                     </h2>
-                    We show the quantitative comparisons of different datasets! 
-                    3DGS (DSV) indicates the results of 3DGS trained with 
-                    dense-small-variance random initialized point clouds, which is the original random initialization strategy used in 3D Gaussian Splatting. <br>
-                    <a style="color: #808080; text-decoration: none;">&dagger;: As 3DGS<sup>&dagger;</sup> is the only method that utilizes SfM point clouds, the values are only included for reference.</a>  
-                    
-
+                    We compare our model with Plenoxels, InstantNGP-Base, InstantNGP-Big, and 3DGS on the Mip-NeRF360 dataset, Tanks&Temples dataset, and Deep Blending dataset. All NeRF methods are trained without SfM points. We evaluate 3DGS and ours trained with SfM-initialized and randomly initialized point cloud. For ours trained with SfM-initialized point cloud, we evaluate utilizing different clustering methods of selecting the top 10% with the least reprojection error (denoted as < 10%) or using cluster centers (denoted as cluster) obtained through HDBSCAN.
+                    <br> 
 
                     <h4 style="margin-top: 20px;">
                         Mip-NeRF360 Dataset
                     </h4>
                     <div class="text-center">
-                        <img src="img/mipnerf360.png" width="100%">
+                        <img src="img/mipnerf360_v2.png" width="100%">
                     </div>
                     <br>
                     <h4>
-                        Tanks&Temples and Deep Blending dataset
+                        Tanks&Temples and Deep Blending Dataset
                     </h4>
                     <div class="text-center">
-                        <img src="img/tntdb.png" width="80%">
+                        <img src="img/tntdb_v2.png" width="80%">
                     </div>
                 </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-offset-0">
+                    <h2>
+                        Quantitative Results in different initial points conditions
+                    </h2>
+                    In real-world scenarios, initial point cloud from SfM can be inaccurate or even unavailable. Under these conditions, 3DGS often fails to maintain its ability while our method can successfully train from randomly initialized point cloud. To demonstrate the effectiveness of our method, we compare our method with 3DGS trained from three different initial point conditions: SfM points, noisy SfM points, and the absence of initial points. 
+                    <br>
+                    
+                    <h4 style="margin-top: 20px;">
+                        Mip-NeRF360 Dataset
+                    </h4>
+                    <div class="text-center">
+                        <img src="img/mipnerf360_sfm.png" width="100%">
+                    </div>
+                    <br>
+                    <h4>
+                        Tanks&Temples and Deep Blending Dataset
+                    </h4>
+                    <div class="text-center">
+                        <img src="img/tntdb_sfm.png" width="80%">
+                    </div>
+                </div>
+
             </div>
 
         <div class="row">
