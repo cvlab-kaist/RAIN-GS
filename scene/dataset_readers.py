@@ -143,7 +143,7 @@ def readColmapSceneInfo(path, images, eval, llffhold=8, args_dict=None):
     ply_path = os.path.join(path, "sparse/0/points3D.ply")
     bin_path = os.path.join(path, "sparse/0/points3D.bin")
     txt_path = os.path.join(path, "sparse/0/points3D.txt")
-        
+
     if not os.path.exists(ply_path):
         print("Converting point3d.bin to .ply, will happen only the first time you open the scene.")
         try:
@@ -155,30 +155,59 @@ def readColmapSceneInfo(path, images, eval, llffhold=8, args_dict=None):
         pcd = fetchPly(ply_path)
     except:
         pcd = None
-
-    if (args_dict is not None) and (args_dict['DSV'] or args_dict['ours']):
-        num_pts = args_dict["num_gaussians"]
         
-        cam_pos = []
-        for k in cam_extrinsics.keys():
-            cam_pos.append(cam_extrinsics[k].tvec)
-        cam_pos = np.array(cam_pos)
-        min_cam_pos = np.min(cam_pos)
-        max_cam_pos = np.max(cam_pos)
-        mean_cam_pos = (min_cam_pos + max_cam_pos) / 2.0
-        cube_mean = (max_cam_pos - min_cam_pos) * 1.5
+    if args_dict['train_from'] == "noisy_sfm":
+        print(f"Adding noise to the point cloud (1.0)...")
+        xyz += np.random.normal(0, 1.0, xyz.shape)
+        rgb += np.random.normal(0, 1.0, rgb.shape)
+        rgb =  np.clip(rgb, 0, 255)
         
-        if args_dict['DSV']:        
-            xyz = np.random.random((num_pts, 3)) * nerf_normalization["radius"] * 3 - nerf_normalization["radius"] * 1.5
-            xyz = xyz + nerf_normalization["translate"]
-            print(f"Generating DSV point cloud ({num_pts})...")
+    if (args_dict is not None) and (args_dict['paper_random'] or args_dict['ours'] or args_dict['ours_new']):
+        if not args_dict['ours'] and args_dict['train_from'] == "reprojection":
+            try:
+                xyz, rgb, error = read_points3D_binary(bin_path)
+            except:
+                xyz, rgb, error = read_points3D_text(txt_path)
+                
+            error_rate = 10
+            err_thr = np.percentile(error[:,0], error_rate)
+            xyz = xyz[(error[:,0]<err_thr),:]
+            rgb = rgb[(error[:,0]<err_thr),:]
+            print(f"Train with {len(xyz)} sparse SfM points... (Sparse Type: Reprojection Error Top {error_rate}%)")
+            storePly(ply_path, xyz, rgb)
+            
+        elif not args_dict['ours'] and ((args_dict['train_from'] == "cluster") or (args_dict['train_from'] == "noisy_sfm")):
+            from sklearn.cluster import HDBSCAN
+            hdbscan = HDBSCAN(min_cluster_size=5, store_centers='both').fit(xyz)
+            xyz = hdbscan.centroids_
+            shs = np.random.random((len(xyz), 3))
+            rgb = SH2RGB(shs) * 255
+            print(f"Train with {len(xyz)} sparse SfM points... (Sparse Type: cluster)")
+            storePly(ply_path, xyz, rgb)
+        
         else:
-            xyz = np.random.random((num_pts, 3)) * (max_cam_pos - min_cam_pos) * 3 - (cube_mean - mean_cam_pos)
-            print(f"Generating OUR point cloud ({num_pts})...")
+            num_pts = args_dict["num_gaussians"]
+            
+            cam_pos = []
+            for k in cam_extrinsics.keys():
+                cam_pos.append(cam_extrinsics[k].tvec)
+            cam_pos = np.array(cam_pos)
+            min_cam_pos = np.min(cam_pos)
+            max_cam_pos = np.max(cam_pos)
+            mean_cam_pos = (min_cam_pos + max_cam_pos) / 2.0
+            cube_mean = (max_cam_pos - min_cam_pos) * 1.5
+            
+            if args_dict['paper_random']:        
+                xyz = np.random.random((num_pts, 3)) * nerf_normalization["radius"] * 3 - nerf_normalization["radius"] * 1.5
+                xyz = xyz + nerf_normalization["translate"]
+                print(f"Generating random point cloud ({num_pts})...")
+            else:
+                xyz = np.random.random((num_pts, 3)) * (max_cam_pos - min_cam_pos) * 3 - (cube_mean - mean_cam_pos)
+                print(f"Generating OUR point cloud ({num_pts})...")
         
-        shs = np.random.random((num_pts, 3))
-        pcd = BasicPointCloud(points=xyz, colors=shs, normals=np.zeros((num_pts, 3)))
-        storePly(ply_path, xyz, SH2RGB(shs) * 255)
+            shs = np.random.random((num_pts, 3))
+            pcd = BasicPointCloud(points=xyz, colors=shs, normals=np.zeros((num_pts, 3)))
+            storePly(ply_path, xyz, SH2RGB(shs) * 255)
     try:
         pcd = fetchPly(ply_path)
     except:

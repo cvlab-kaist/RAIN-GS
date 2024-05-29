@@ -25,7 +25,7 @@ def training(dataset, opt, pipe, testing_iterations ,saving_iterations, checkpoi
     first_iter = 0
     tb_writer = prepare_output_and_logger(dataset, args_dict['output_path'], args_dict['exp_name'], args_dict['project_name'])
     
-    if args_dict['ours']:
+    if args_dict['ours'] or args_dict['ours_new']:
         divide_ratio = 0.7
     else:
         divide_ratio = 0.8
@@ -35,6 +35,9 @@ def training(dataset, opt, pipe, testing_iterations ,saving_iterations, checkpoi
     scene = Scene(dataset, gaussians, args_dict=args_dict)
     gaussians.training_setup(opt) 
     
+    if args_dict["warmup_iter"] > 0:
+        opt.densify_until_iter += args_dict["warmup_iter"]
+        
     if checkpoint:
         (model_params, first_iter) = torch.load(checkpoint)
         gaussians.restore(model_params, opt)
@@ -67,16 +70,20 @@ def training(dataset, opt, pipe, testing_iterations ,saving_iterations, checkpoi
 
         iter_start.record()
 
-        gaussians.update_learning_rate(iteration)
-        
-        if args_dict['DSV']:
-            if iteration % 1000 == 0:
-                gaussians.oneupSHdegree()
-        elif args_dict['ours']:
+        if args_dict['ours_new']:
+            if iteration >= args_dict["warmup_iter"]:    
+                gaussians.update_learning_rate(iteration-args_dict["warmup_iter"])
+        else:
+            gaussians.update_learning_rate(iteration)
+
+        if args_dict['ours'] or args_dict['ours_new']:
             if iteration >= 5000:
                 if iteration % 1000 == 0:
                     gaussians.oneupSHdegree()
-        
+        else:
+            if iteration % 1000 == 0:
+                gaussians.oneupSHdegree()
+                        
         if not viewpoint_stack:
             viewpoint_stack = scene.getTrainCameras().copy()
         viewpoint_cam = viewpoint_stack.pop(randint(0, len(viewpoint_stack)-1))
@@ -128,7 +135,9 @@ def training(dataset, opt, pipe, testing_iterations ,saving_iterations, checkpoi
 
                 if iteration > opt.densify_from_iter and iteration % opt.densification_interval == 0:
                     size_threshold = 20 if iteration > opt.opacity_reset_interval else None
-                    gaussians.densify_and_prune(opt.densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold)         
+                    abe_split = True if iteration <= args_dict['warmup_iter'] else False
+                    
+                    gaussians.densify_and_prune(opt.densify_grad_threshold, 0.005, scene.cameras_extent, size_threshold, N=2, abe_split=abe_split)         
                 
                 if iteration % opt.opacity_reset_interval == 0 or (dataset.white_background and iteration == opt.densify_from_iter):
                     gaussians.reset_opacity()
@@ -224,7 +233,7 @@ if __name__ == "__main__":
     parser.add_argument('--debug_from', type=int, default=-1)
     parser.add_argument('--detect_anomaly', action='store_true', default=False)
     parser.add_argument("--test_iterations", nargs="+", type=int, default=[7000, 30000])
-    parser.add_argument("--save_iterations", nargs="+", type=int, default=[7000, 30000])
+    parser.add_argument("--save_iterations", nargs="+", type=int, default=[30000])
     parser.add_argument("--quiet", action="store_true")
     parser.add_argument("--checkpoint_iterations", nargs="+", type=int, default=[])
     parser.add_argument("--start_checkpoint", type=str, default = None)
@@ -235,9 +244,12 @@ if __name__ == "__main__":
     parser.add_argument("--c2f", action="store_true", default=False)
     parser.add_argument("--c2f_every_step", type=float, default=1000, help="Recompute low pass filter size for every c2f_every_step iterations")
     parser.add_argument("--c2f_max_lowpass", type=float, default= 300, help="Maximum low pass filter size")
-    parser.add_argument("--num_gaussians", type=int, default=1000000, help="Number of random initial gaussians to start with (default=1M for DSV)")
-    parser.add_argument('--DSV', action='store_true', help="Use the initialisation from the paper")
+    parser.add_argument("--num_gaussians", type=int, default=1000000, help="Number of random initial gaussians to start with (default=1M for random)")
+    parser.add_argument('--paper_random', action='store_true', help="Use the initialisation from the paper")
     parser.add_argument("--ours", action="store_true", help="Use our initialisation")
+    parser.add_argument("--ours_new", action="store_true", help="Use our initialisation version 2")
+    parser.add_argument("--warmup_iter", type=int, default=0)
+    parser.add_argument("--train_from", type=str, default="random", choices=["random", "reprojection", "cluster", "noisy_sfm"])
     args = parser.parse_args(sys.argv[1:])
     args.save_iterations.append(args.iterations)
     args.white_background = args.white_bg
@@ -245,16 +257,39 @@ if __name__ == "__main__":
 
     safe_state(args.quiet)
     
-    if args.ours:
-        print("========= USING OUR INITIALISATION =========")
+    args.eval = True
+    outdoor_scenes=['bicycle', 'flowers', 'garden', 'stump', 'treehill']
+    indoor_scenes=['room', 'counter', 'kitchen', 'bonsai']
+    for scene in outdoor_scenes:
+        if scene in args.source_path:
+            args.images = "images_4"
+            print("Using images_4 for outdoor scenes")
+    for scene in indoor_scenes:
+        if scene in args.source_path:
+            args.images = "images_2"
+            print("Using images_2 for indoor scenes")
+    
+    if args.ours or args.ours_new:
+        print("========= USING OUR METHOD =========")
         args.c2f = True
         args.c2f_every_step = 1000
         args.c2f_max_lowpass = 300
-        args.eval = True
         args.num_gaussians = 10
+    if args.ours_new:
+        args.warmup_iter = 10000
 
-    if not args.DSV and not args.ours:
-        parser.error("Please specify either --DSV or --ours")
+    if args.ours and (args.train_from != "random"):
+        parser.error("Our initialization version 1 can only be used with --train_from random")
+        
+    # if args.sparse_sfm and args.cluster:
+    #     parser.error("Please specify either --sparse_sfm or --cluster")
+    # if args.random and (args.sparse_sfm or args.cluster):
+    #     parser.error("Random initialization cannot be used with --sparse_sfm or --cluster")
+    # if args.random and args.noisy_sfm:
+    #     parser.error("Random initialization cannot be used with --noisy_sfm")
+    # if args.ours and (args.sparse_sfm or args.cluster):
+    #     parser.error("Our initialization version 1 cannot be used with --sparse_sfm or --cluster")
+    
     print(f"args: {args}")
     
     while True :
