@@ -34,7 +34,9 @@ To train 3D Gaussians Splatting with our **updated** **RAIN-GS** novel strategy,
 ```bash
 python train.py -s {dataset_path} --exp_name {exp_name} --eval --ours_new 
 ```
-You can train from various initializations by adding `--train_from ['random', 'reprojection', 'cluster', 'noisy_sfm']` (random is default)
+You can train from various initializations by adding `--train_from ['random', 'reprojection', 'cluster', 'noisy_sfm']` (random is default)<br><br>
+To train with Mip-NeRF360 dataset, you can add argument `--images images_4` for outdoor scenes and `--images images_2` for indoor scenes to modify the resolution of the input images.
+
 <details>
 <summary>Toggle to find more details for training from various initializations.</summary>
 
@@ -83,8 +85,6 @@ For Noisy SfM initialization (used in the original 3D Gaussian Splatting), you c
 ```bash
 python train.py -s {dataset_path} --exp_name {exp_name} --eval --train_from 'noisy_sfm'
 ```
-
-To train with Mip-NeRF360 dataset, you can add argument `--images images_4` for outdoor scenes and `--images images_2` for indoor scenes to modify the resolution of the input images.
 
 ## Acknowledgement
 
