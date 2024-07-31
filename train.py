@@ -280,15 +280,6 @@ if __name__ == "__main__":
 
     if args.ours and (args.train_from != "random"):
         parser.error("Our initialization version 1 can only be used with --train_from random")
-        
-    # if args.sparse_sfm and args.cluster:
-    #     parser.error("Please specify either --sparse_sfm or --cluster")
-    # if args.random and (args.sparse_sfm or args.cluster):
-    #     parser.error("Random initialization cannot be used with --sparse_sfm or --cluster")
-    # if args.random and args.noisy_sfm:
-    #     parser.error("Random initialization cannot be used with --noisy_sfm")
-    # if args.ours and (args.sparse_sfm or args.cluster):
-    #     parser.error("Our initialization version 1 cannot be used with --sparse_sfm or --cluster")
     
     print(f"args: {args}")
     
