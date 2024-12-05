@@ -9,6 +9,11 @@ by [Jaewoo Jung](https://crepejung00.github.io)<sup>:umbrella:</sup>, [Jisang Ha
 
 :umbrella:: Equal Contribution <br>
 &dagger;: Corresponding Author
+## News
+
+We found that the current version of our code has minor bugs including the rendering code 😢. <br>
+We will fix everything as soon as possible.
+
 ## Introduction
 ![](assets/teaser.png)<br>
 We introduce a novel optimization strategy (**RAIN-GS**) for 3D Gaussian Splatting!
